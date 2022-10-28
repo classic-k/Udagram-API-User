@@ -34,4 +34,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tag: ${{secrets.Docker_Username}}/udagram-api-feed
+          tag: ${{secrets.Docker_Username}}/udagram-api-user
