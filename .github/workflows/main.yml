@@ -42,7 +42,7 @@ jobs:
          number: "${{ needs.stage-branch.outputs.pr-num }}"
          repo: classic-k/Udagram-API-User
       - name: pause
-        run: sleep 5
+        run: sleep 4
       # auto merge pr
       - name: automerge
         uses: "pascalgn/automerge-action@v0.15.5"
