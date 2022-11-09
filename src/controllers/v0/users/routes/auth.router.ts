@@ -44,7 +44,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   }
 
   const token = tokenBearer[1];
-  return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: DT) => {
+  return jwt.verify(token, c.config.jwt.secret, (err: jwt.JsonWebTokenError | jwt.NotBeforeError | jwt.TokenExpiredError | null, decoded: object | string) => {
     if (err) {
       return res.status(500).send({auth: false, message: 'Failed to authenticate.'});
     }
