@@ -84,8 +84,8 @@ console.log(new Date().toLocaleDateString()," Unauthenticated request ","Url: ",
           console.log(token, err)
           return res.status(500).send({auth: false, message: 'Failed to authenticate.'});
       }
-
-      const {email, reqID} = decoded
+      console.log(decoded)
+      const {email, reqID} = jwt.decode(token) as {email: string, reqID: string}
       
       console.log(new Date().toLocaleDateString()," Request ", reqID, "User: ",email, "URL: ",url)
       return next();
