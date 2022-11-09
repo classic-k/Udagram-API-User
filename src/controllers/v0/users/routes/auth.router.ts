@@ -76,8 +76,8 @@ console.log(new Date().toLocaleDateString()," Unauthenticated request ","Url: ",
     }
   
     const token = tokenBearer[1];
-    const jwt_secret = c.config.jwt.secret
-    return jwt.verify(token, jwt_secret, (err, decoded: object | string) => {
+    
+    return jwt.verify(token,c.config.jwt.secret, (err: jwt.JsonWebTokenError | jwt.NotBeforeError | jwt.TokenExpiredError | null, decoded: object | string) => {
         
         if (err) {
           console.log("Token error: ",new Date().toLocaleDateString(), " URL: ",url)
