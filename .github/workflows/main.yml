@@ -4,13 +4,13 @@ name: UserCI-dev
 on:
   push:
     branches:
-      - dev
+      - staging
 jobs:
-  dev-branch:
+  stage-branch:
     name: cr-pr
     runs-on: ubuntu-latest
     outputs:
-      pr-num: ${{ steps.stage-pr.outputs.pr_number }}
+      pr-num: ${{ steps.main-pr.outputs.pr_number }}
     steps:  
       - name: checkout root
         uses: actions/checkout@v3
@@ -18,29 +18,29 @@ jobs:
           fetch-depth: 0
       - name: Create pr
         uses: devops-infra/action-pull-request@v0.5.2
-        id: stage-pr
+        id: main-pr
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-          source_branch: dev
+          source_branch: staging
           label: automerge
-          target_branch: staging
-          title: Merge dev to staging
+          target_branch: main
+          title: Merge staging to main
           body: "**Automated pull request**"
           #end
       - name: set-outs
-        run: echo "pr number ${{ steps.stage-pr.outputs.url }} ${{ steps.stage-pr.outputs.pr_number }}"
+        run: echo "pr number ${{ steps.main-pr.outputs.url }} ${{ steps.main-pr.outputs.pr_number }}"
   approve:
     runs-on: ubuntu-latest
     name: approve-merge
-    needs: [dev-branch]
+    needs: [stage-branch]
     steps:
       - name: echos
-        run: echo "output cr ${{ needs.dev-branch.outputs.pr-num }}"
+        run: echo "output cr ${{ needs.stage-branch.outputs.pr-num }}"
       - name: Approve Pull Request
         uses: juliangruber/approve-pull-request-action@v2.0.0
         with:
          github-token: ${{ secrets.GH_TOKEN }}
-         number: "${{ needs.dev-branch.outputs.pr-num }}"
+         number: "${{ needs.stage-branch.outputs.pr-num }}"
          repo: classic-k/Udagram-API-User
       - name: pause
         run: sleep 5
@@ -49,4 +49,4 @@ jobs:
         uses: "pascalgn/automerge-action@v0.15.5"
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
-          PULL_REQUEST: ${{ needs.dev-branch.outputs.pr-num}}
+          PULL_REQUEST: ${{ needs.stage-branch.outputs.pr-num}}
