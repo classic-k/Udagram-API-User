@@ -1,3 +1,4 @@
+
 name: UserCI-dev
 
 on:
@@ -23,7 +24,7 @@ jobs:
           source_branch: dev
           label: automerge
           target_branch: staging
-          title: Merge staging to main
+          title: Merge dev to staging
           body: "**Automated pull request**"
           #end
       - name: set-outs
