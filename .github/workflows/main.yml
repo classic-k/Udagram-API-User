@@ -14,7 +14,7 @@ jobs:
     name: test-cr
     runs-on: ubuntu-latest
     outputs:
-      pr-num: ${{ steps.staging-pr.outputs.pr_number }}
+      pr-num: ${{ steps.feed-api-staging-pr.outputs.pr_number }}
     steps:
       - name: checkout root
         uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
           body: "**Automated pull request**"
           #end
       - name: set-outs
-        run: echo "${{ steps.staging-pr.outputs.pr_number }}"
+        run: echo "${{ steps.feed-api-staging-pr.outputs.pr_number }}"
   approve:
     runs-on: ubuntu-latest
     needs: [dev-branch]
