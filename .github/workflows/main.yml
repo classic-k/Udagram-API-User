@@ -30,7 +30,6 @@ jobs:
           target_branch: staging
           title: Merge Dev to staging
           body: "**Automated pull request**"
-          #end
       - name: set-outs
         run: echo "${{ steps.feed-api-staging-pr.outputs.pr_number }}"
   approve:
