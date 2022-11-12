@@ -1,4 +1,4 @@
-name: User-API-dev
+name: UserCI
 on:
   workflow_dispatch:
 
