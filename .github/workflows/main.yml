@@ -1,4 +1,4 @@
-name: userCI-main
+name: userCI
 on:
   workflow_dispatch:
   push:
