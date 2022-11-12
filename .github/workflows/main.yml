@@ -1,40 +1,35 @@
-name: UserCI
-on:
-  workflow_dispatch:
+name: userCI-dev
 
+on:
   push:
     branches:
-    - dev
-  pull_request:
-    branches:
-    - dev
-
+      - dev
 jobs:
   dev-branch:
-    name: test-cr
+    name: cr-pr
     runs-on: ubuntu-latest
     outputs:
-      pr-num: ${{ steps.user-api-staging-pr.outputs.pr_number }}
-    steps:
+      pr-num: ${{ steps.stage-pr.outputs.pr_number }}
+    steps:  
       - name: checkout root
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Create pr
         uses: devops-infra/action-pull-request@v0.5.2
-        id: user-api-staging-pr
+        id: stage-pr
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
           source_branch: dev
           label: automerge
           target_branch: staging
-          title: Merge Dev to staging
+          title: Merge staging to main
           body: "**Automated pull request**"
-          #end
       - name: set-outs
-        run: echo "${{ steps.user-api-staging-pr.outputs.pr_number }}"
+        run: echo "pr number ${{ steps.stage-pr.outputs.url }} ${{ steps.stage-pr.outputs.pr_number }}"
   approve:
     runs-on: ubuntu-latest
+    name: approve-merge
     needs: [dev-branch]
     steps:
       - name: echos
@@ -44,7 +39,7 @@ jobs:
         with:
          github-token: ${{ secrets.GH_TOKEN }}
          number: "${{ needs.dev-branch.outputs.pr-num }}"
-         repo: classic-k/Udagram-Frontend
+         repo: classic-k/Udagram-API-User
       - name: pause
         run: sleep 5
       # auto merge pr
