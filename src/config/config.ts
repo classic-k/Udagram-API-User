@@ -6,8 +6,8 @@ export const config = {
   'host': process.env.POSTGRES_HOST,
  // 'port':process.env.POSTGRES_PORT,
   'dialect': process.env.DIALECT,
-  'aws_region': process.env.AWS_REGION,
-  'aws_profile': process.env.AWS_PROFILE,
+  'aws_region': process.env.region,
+  'aws_profile': process.env.profile,
   'aws_media_bucket': process.env.AWS_MEDIA_BUCKET,
   'url': process.env.URL,
   'jwt': {
